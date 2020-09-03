@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    justify-content: center;
+    width: 85%;
+}
+
+.container h3 {
+    text-align: center;
+    font-size: 30px;
+}

@@ -5,7 +5,7 @@ import { Line, Bar } from 'react-chartjs-2'
 // thêm style để css
 import styles from './Chart.module.css';
 
-function Chart() {
+function Chart({ data: { confirmed, recovered, deaths }, country }) {
 
     const [dailyData, setDailyData] = useState([]);
 
@@ -14,7 +14,7 @@ function Chart() {
             setDailyData(await fetchDailyData());
         }
         fetchAPI();
-    })
+    }, [])
     const lineCharts = (
         dailyData.length ? (
             <Line
@@ -22,12 +22,12 @@ function Chart() {
                     labels: dailyData.map(({ date }) => date),
                     datasets: [{
                         data: dailyData.map(({ confirmed }) => confirmed),
-                        labels: "Infected",
+                        label: "Infected",
                         borderColor: '#3333ff',
                         fill: true,
                     }, {
                         data: dailyData.map(({ deaths }) => deaths),
-                        labels: "Deaths",
+                        label: "Deaths",
                         borderColor: 'red',
                         backgroundColor: 'rgba(255, 0, 0, 0.5)',
                         fill: true,
@@ -35,9 +35,27 @@ function Chart() {
                 }}
             />) : null
     );
+    const barCharts = (
+        confirmed ? (
+            <Bar
+                data={{
+                    labels: ['Injected', 'Recovered', 'Deaths'],
+                    datasets: [{
+                        label: "People",
+                        backgroundColor: ['rgba(0, 0, 255, 0.5)', 'rgba(255, 0, 0, 0.5)', 'rgba(0, 255, 0, 0.5)'],
+                        data: [confirmed.value, recovered.value, deaths.value]
+                    }]
+                }}
+                option={{
+                    legend: { display: false },
+                    title: { display: true, text: `current state in ${country}` }
+                }}
+            />
+        ) : null
+    );
     return (
         <div className={styles.container}>
-            {lineCharts}
+            {country ? barCharts : lineCharts}
         </div>
     )
 }
