@@ -28,7 +28,7 @@ export const fetchDailyData = async () => {
     return modifiedData;
   } catch (error) {}
 };
-// API ra các country chỏ select
+// API ra các country cho select
 export const fetchCountries = async () => {
   try {
     const {

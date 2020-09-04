@@ -27,7 +27,7 @@ export default class App extends Component {
     const { data, country } = this.state;
     return (
       <div className={style.container}>
-        <img src="./covid-19.png" />
+        <img src="./covid-19.png" alt="./covid-19.png" />
         <Cards data={data} />
         <CountryPicker handleCountryChange={this.handleCountryChange} />
         <Chart data={data} country={country} />
